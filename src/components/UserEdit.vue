@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-lg-4">
         <router-link to="/" class="vuesj-course btn btn-primary">
-          vue-js-kours
+          vue-js-cours
         </router-link>
       </div>
       <div class="col-lg-4">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import UserForm from './UserForm'
+import UserForm from './items-components/UserForm'
 import axios from 'axios'
 
   export default {
