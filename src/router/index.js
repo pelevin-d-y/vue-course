@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import main from '@/components/main'
-import Table from '@/components/table'
-import user from '@/components/user'
-import UserEdit from '@/components/UserEdit'
 
 Vue.use(Router)
 
@@ -13,22 +9,22 @@ export default new Router({
     {
       path: '/',
       name: 'main',
-      component: main
+      component: () => import('@/components/main')
     },
     {
       path: '/list',
       name: 'list',
-      component: Table
+      component: () => import('@/components/table')
     },
     {
       path: '/user/add',
       name: 'user',
-      component: user
+      component: () => import('@/components/user')
     },
     {
       path: '/user/:id',
       name: 'userEdit',
-      component: UserEdit,
+      component: () => import('@/components/UserEdit'),
       props: true
     }
   ]

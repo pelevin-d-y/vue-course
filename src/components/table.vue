@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <div class="col-lg-4">
-        <router-link to="/list" class="vuesj-course btn btn-primary" active-class="active">
+        <router-link to="/list" class="vuesj-course btn btn-primary" active-class="active" exact>
           Список пользователей
         </router-link>
       </div>
@@ -19,8 +19,8 @@
       </div>
     </div>
 
-    <quantity-rows class="quantity-rows" @changeSelect="rowsQuantity" ></quantity-rows>
-
+    <quantity-rows class="quantity-rows" v-model.number = "tableRows"></quantity-rows>
+<!-- @changeSelect="rowsQuantity" -->
     <table class="table table-bordered red-border">
       <tr>
         <th>#</th>
@@ -32,7 +32,7 @@
         <th>Телефон</th>
         <th>Зарегистрирован</th>
       </tr>
-      <tr v-for="user in pageUsers" :key="user.id">
+      <tr v-for="user in allUsers" :key="user.id">
         <td>
           <router-link :to="`/user/${user.id}`"># {{ user.id }}</router-link>
         </td>
@@ -51,13 +51,14 @@
 
 <script>
 import axios from 'axios'
-import tablePagination from './items-components/table-pagination'
-import quantityRows from './items-components/quantity-rows'
+import tablePagination from '@/components/items-components/table-pagination'
+import quantityRows from '@/components//items-components/quantity-rows'
 
   export default {
     data() {
         return {
           url: 'http://localhost:3000/users/',
+          tableRows: 5,
           allUsers: [],
           pageUsers: null
       }
@@ -68,17 +69,16 @@ import quantityRows from './items-components/quantity-rows'
           .then(response => {
             this.allUsers = response.data
           })
-          .then(() => {
-            this.rowsQuantity();
-          });
+          // .then(() => {
+          //   this.rowsQuantity();
+          // });
       },
 
-      rowsQuantity(count = 5) {
-        this.pageUsers = this.allUsers.filter((item) => {
-          return item.id < count;
-        });
-        console.log(this.pageUsers);
-      },
+      // rowsQuantity(count = 5) {
+      //   this.pageUsers = this.allUsers.filter((item) => {
+      //     return item.id < count;
+      //   });
+      // },
     },
 
     mounted() {

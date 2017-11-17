@@ -1,31 +1,39 @@
 <template>
   <div>
-    <select v-model="currentCount" name="quantity-row" id="quantity-row">
-      <option v-for="item in countArray">{{ item }}</option>
+    <select :value="tableRows" @input="currentCount" name="quantity-row" id="quantity-row">
+      <option v-for="item in countArray" :key="item">{{ item }}</option>
     </select>
   </div>
 </template>
 
 <script>
   export default {
+    model: {
+      prop: 'tableRows'
+    },
+
     props: {
+      tableRows: {
+        type: Number
+      }
     },
 
     data() {
       return {
-        currentCount: 5,
         countArray: [5, 7, 10, 15, 30]
       }
     },
     methods: {
-
+      currentCount() {
+        this.$emit('input', event.target.value);
+      }
     },
 
-    watch: {
-      currentCount: function(count) {
-        this.$emit('changeSelect', count)
-      }
-    }
+    // watch: {
+    //   currentCount: function(count) {
+    //     this.$emit('changeSelect', count)
+    //   }
+    // }
   }
 </script>
 

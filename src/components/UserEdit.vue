@@ -13,7 +13,7 @@
         </router-link>
       </div>
       <div class="col-lg-4">
-        <router-link to="/user/add" class="vuesj-course btn btn-primary" active-class="active">
+        <router-link to="/user/add" class="vuesj-course btn btn-primary" active-class="active" exact>
           Добавить пользователя
         </router-link>
       </div>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import UserForm from './items-components/UserForm'
 import axios from 'axios'
 
   export default {
@@ -36,7 +35,7 @@ import axios from 'axios'
     },
 
     components: {
-      UserForm
+      UserForm: () => import('@/components/items-components/UserForm')
     },
 
     data() {

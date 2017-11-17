@@ -3,7 +3,7 @@
     <h1>Main</h1>
     <div class="row">
       <div class="col-lg-4">
-        <router-link to="/" class="vuesj-course btn btn-primary" active-class="active">
+        <router-link to="/" class="vuesj-course btn btn-primary" active-class="active" exact>
           vue-js-cours
         </router-link>
       </div>
