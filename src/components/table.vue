@@ -69,7 +69,7 @@ import quantityRows from './items-components/quantity-rows'
             this.allUsers = response.data
           })
           .then(() => {
-            this.pageUsers = this.rowsQuantity();
+            this.rowsQuantity();
           });
       },
 
