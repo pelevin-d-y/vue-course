@@ -1,26 +1,7 @@
 <template>
   <div class="hello container">
-    <h1>Table</h1>
-    <div class="row">
-      <div class="col-lg-4">
-        <router-link to="/" class="vuesj-course btn btn-primary">
-          vue-js-cours
-        </router-link>
-      </div>
-      <div class="col-lg-4">
-        <router-link to="/list" class="vuesj-course btn btn-primary" active-class="active" exact>
-          Список пользователей
-        </router-link>
-      </div>
-      <div class="col-lg-4">
-        <router-link to="/user/add" class="vuesj-course btn btn-primary">
-          Добавить пользователя
-        </router-link>
-      </div>
-    </div>
-
+    <navigation :pageTitle="pageTitle"></navigation>
     <quantity-rows class="quantity-rows" v-model.number = "tableRows"></quantity-rows>
-<!-- @changeSelect="rowsQuantity" -->
     <table class="table table-bordered red-border">
       <tr>
         <th>#</th>
@@ -32,7 +13,7 @@
         <th>Телефон</th>
         <th>Зарегистрирован</th>
       </tr>
-      <tr v-for="user in allUsers" :key="user.id">
+      <tr v-for="user in getPageUsers" :key="user.id">
         <td>
           <router-link :to="`/user/${user.id}`"># {{ user.id }}</router-link>
         </td>
@@ -45,50 +26,47 @@
         <td>{{ user.registered }}</td>
       </tr>
     </table>
-    <table-pagination></table-pagination>
+    <table-pagination :tableRows="tableRows" :allRows="allUsers.length" v-model.number="currentPage" ></table-pagination>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import tablePagination from '@/components/items-components/table-pagination'
-import quantityRows from '@/components//items-components/quantity-rows'
 
   export default {
-    data() {
-        return {
+    components: {
+      tablePagination: () => import('@/components/items-components/table-pagination'),
+      quantityRows: () => import('@/components//items-components/quantity-rows'),
+      navigation: () => import('@/components/navigation/navigation')
+    },
+
+    data: () => ({
           url: 'http://localhost:3000/users/',
           tableRows: 5,
           allUsers: [],
-          pageUsers: null
+          currentPage: 1,
+          pageTitle: 'Table'
+      }),
+
+
+    computed: {
+      getPageUsers() {
+        return this.allUsers.slice((this.currentPage - 1) * this.tableRows, this.currentPage * this.tableRows)
       }
     },
+
     methods: {
       loadData() {
         axios.get(this.url)
           .then(response => {
             this.allUsers = response.data
           })
-          // .then(() => {
-          //   this.rowsQuantity();
-          // });
-      },
-
-      // rowsQuantity(count = 5) {
-      //   this.pageUsers = this.allUsers.filter((item) => {
-      //     return item.id < count;
-      //   });
-      // },
+      }
     },
 
     mounted() {
       this.loadData();
     },
-
-    components: {
-      tablePagination,
-      quantityRows
-    }
   }
 </script>
 

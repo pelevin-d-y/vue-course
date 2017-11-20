@@ -2,65 +2,108 @@
   <div class="container">
     <h2>USER</h2>
     <div class="input-container">
-      first name
-      <input type="text" v-model="value.firstName">
+      <label>
+        first name
+      </label>
+        <input type="text" v-model="user.firstName">
     </div>
     <div class="input-container">
-      last name
-      <input type="text" v-model="value.lastName">
+      <label>
+        last name
+      </label>
+        <input type="text" v-model="user.lastName">
     </div>
     <div class="input-container">
-      access Level
-      <input type="text" v-model="value.accessLevel">
+      <label>
+        access Level
+      </label>
+        <select id="form-select">
+          <option v-for="accessLevel in accessLevels" :key="accessLevel">{{ accessLevel }}</option> accessLevels
+        </select>
     </div>
     <div class="input-container">
-      company
-      <input type="text" v-model="value.company">
+      <label>
+        company
+      </label>
+        <input type="text" v-model="user.company">
     </div>
     <div class="input-container">
-      picture
-      <input type="text" v-model="value.picture">
+      <label>
+        picture
+      </label>
+        <input type="text" v-model="user.picture">
+        <img :src="user.picture" v-if="user.picture" alt="">
     </div>
     <div class="input-container">
-      balance
-      <input type="text" v-model="value.balance">
+      <label>
+        balance
+      </label>
+        <input type="text" v-model="user.balance">
     </div>
     <div class="input-container">
-      age
-      <input type="number" v-model="value.age">
+      <label>
+        age
+      </label>
+        <input type="number" v-model.number="user.age">
     </div>
     <div class="input-container">
-      email
-      <input type="email" v-model="value.email">
+      <label>
+        email
+      </label>
+        <input type="email" v-model="user.email">
+
     </div>
     <div class="input-container">
-      phone
-      <input type="tel" v-model="value.phone">
+      <label>
+        phone
+      </label>
+        <input type="tel" v-model="user.phone">
+
     </div>
     <div class="input-container">
-      address
-      <input type="text" v-model="value.address">
+      <label>
+        address
+      </label>
+        <input type="text" v-model="user.address">
+
     </div>
     <div class="input-container">
-      about
-      <textarea type="text" v-model="value.about"></textarea>
+      <label>
+        about
+      </label>
+        <textarea type="text" v-model="user.about"></textarea>
     </div>
     <div class="input-container">
-      registered
-      <input type="text" v-model="value.registered">
+      <label>
+        registered
+      </label>
+    <input type="text" v-model="user.registered">
+
     </div>
 
-    <pre>{{ value }}</pre>
+    <pre>{{ user }}</pre>
   </div>
 </template>
 
 <script>
   export default {
     name: 'User',
-    props: ["value"]
 
-    }
+    model: {
+      prop: 'user'
+    },
 
+    props: {
+      user: {
+        type: Object,
+        required: true
+      }
+    },
+
+    data: () => ({
+      accessLevels: ['user','guest','admin']
+    })
+  }
 </script>
 
 <style scoped>
@@ -71,5 +114,13 @@
   textarea {
     width: 400px;
     height: 400px;
+  }
+
+  label {
+    width: 150px;
+  }
+
+  img {
+    display: block;
   }
 </style>
