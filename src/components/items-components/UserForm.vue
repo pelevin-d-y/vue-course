@@ -33,6 +33,8 @@
       </label>
         <input type="text" v-model="user.picture">
         <img :src="user.picture" v-if="user.picture" alt="">
+        <input type="file" class="hidden" ref="image" @change="upload">
+        <button class="btn btn-primary file-btn" @click="newImage">Выбрать новую</button>
     </div>
     <div class="input-container">
       <label>
@@ -86,6 +88,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
   export default {
     name: 'User',
 
@@ -102,7 +106,33 @@
 
     data: () => ({
       accessLevels: ['user','guest','admin']
-    })
+    }),
+
+    methods: {
+      newImage() {
+        this.$refs.image.click();
+      },
+      upload() {
+        const url = 'https://api.imgur.com/3/image'
+
+        const data = new FormData();
+        console.log( this.$refs.image.files)
+        data.append('image', this.$refs.image.files[0])
+
+        const config = {
+          headers: {
+            'Authorization': 'Client-ID ab9ad40496ce4cd'
+          }
+        }
+
+        axios.post(url, data, config)
+          .then(response => response.data)
+          .then(response => {
+            this.user.picture = response.data.link
+            this.$refs.image.value = ''
+          })
+      }
+    }
   }
 </script>
 
@@ -122,5 +152,9 @@
 
   img {
     display: block;
+  }
+
+  .file-btn {
+    max-width: 150px;
   }
 </style>

@@ -1,8 +1,7 @@
 <template>
   <div>
-  <user-form v-model="user"></user-form>
-
-  <navigation :pageTitle="pageTitle"></navigation>
+    <navigation :pageTitle="pageTitle"></navigation>
+    <user-form v-model="user"></user-form>
   </div>
 </template>
 
