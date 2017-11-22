@@ -79,15 +79,17 @@
       <label>
         registered
       </label>
-    <input type="text" v-model="user.registered">
-
+    <datepicker v-model="user.registered"></datepicker>
+    <input type="text" class="form-control" v-model="user.registered">
     </div>
-
     <pre>{{ user }}</pre>
+
+    <slot></slot>
   </div>
 </template>
 
 <script>
+import datepicker from '@/components/plagins/datepicker'
 import axios from 'axios'
 
   export default {
@@ -102,6 +104,10 @@ import axios from 'axios'
         type: Object,
         required: true
       }
+    },
+
+    components: {
+      datepicker
     },
 
     data: () => ({

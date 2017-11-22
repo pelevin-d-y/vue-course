@@ -48,7 +48,6 @@ import axios from 'axios'
           pageTitle: 'Table'
       }),
 
-
     computed: {
       getPageUsers() {
         return this.allUsers.slice((this.currentPage - 1) * this.tableRows, this.currentPage * this.tableRows)
