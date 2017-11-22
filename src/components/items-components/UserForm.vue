@@ -73,14 +73,15 @@
       <label>
         about
       </label>
-        <textarea type="text" v-model="user.about"></textarea>
+        <textarea class="about" type="text" v-model="user.about"></textarea>
+        <medium-editor></medium-editor>
     </div>
     <div class="input-container">
       <label>
         registered
       </label>
     <datepicker v-model="user.registered"></datepicker>
-    <input type="text" class="form-control" v-model="user.registered">
+    <input v-show="false" type="text" class="form-control" v-model="user.registered">
     </div>
     <pre>{{ user }}</pre>
 
@@ -90,6 +91,7 @@
 
 <script>
 import datepicker from '@/components/plagins/datepicker'
+import mediumEditor from '@/components/plagins/medium-editor'
 import axios from 'axios'
 
   export default {
@@ -107,7 +109,8 @@ import axios from 'axios'
     },
 
     components: {
-      datepicker
+      datepicker,
+      mediumEditor
     },
 
     data: () => ({
