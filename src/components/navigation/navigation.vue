@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-lg-4">
         <router-link to="/" class="vuesj-course btn btn-primary" active-class="active" exact>
-          vue-js-cours
+          {{ layoutTitle }}
         </router-link>
       </div>
       <div class="col-lg-4">
@@ -24,6 +24,12 @@
 <script>
   export default {
     props: ['pageTitle'],
+
+    computed: {
+      layoutTitle() {
+        return this.$store.state.navbarTitle
+      }
+    }
   }
 </script>
 

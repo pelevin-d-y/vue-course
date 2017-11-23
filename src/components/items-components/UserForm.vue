@@ -67,14 +67,13 @@
         address
       </label>
         <input type="text" v-model="user.address">
-
     </div>
     <div class="input-container">
       <label>
         about
       </label>
-        <textarea class="about" type="text" v-model="user.about"></textarea>
-        <medium-editor></medium-editor>
+        <textarea v-show="false" class="about" type="text" v-model="user.about"></textarea>
+        <medium-editor v-model="user.about"></medium-editor>
     </div>
     <div class="input-container">
       <label>
