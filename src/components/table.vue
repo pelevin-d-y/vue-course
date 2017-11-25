@@ -20,7 +20,6 @@
     </div>
 
     <quantity-rows class="quantity-rows" v-model.number = "tableRows"></quantity-rows>
-<!-- @changeSelect="rowsQuantity" -->
     <table class="table table-bordered red-border">
       <tr>
         <th>#</th>
@@ -32,7 +31,7 @@
         <th>Телефон</th>
         <th>Зарегистрирован</th>
       </tr>
-      <tr v-for="user in allUsers" :key="user.id">
+      <tr v-for="user in rowsQuantity" :key="user.id">
         <td>
           <router-link :to="`/user/${user.id}`"># {{ user.id }}</router-link>
         </td>
@@ -45,7 +44,7 @@
         <td>{{ user.registered }}</td>
       </tr>
     </table>
-    <table-pagination></table-pagination>
+    <table-pagination :tableRows="tableRows" :allRows="allUsers.length" v-model.number="currentPage"></table-pagination>
   </div>
 </template>
 
@@ -60,7 +59,8 @@ import quantityRows from '@/components//items-components/quantity-rows'
           url: 'http://localhost:3000/users/',
           tableRows: 5,
           allUsers: [],
-          pageUsers: null
+          currentUsers: [],
+          currentPage: 1
       }
     },
     methods: {
@@ -69,16 +69,13 @@ import quantityRows from '@/components//items-components/quantity-rows'
           .then(response => {
             this.allUsers = response.data
           })
-          // .then(() => {
-          //   this.rowsQuantity();
-          // });
       },
+    },
 
-      // rowsQuantity(count = 5) {
-      //   this.pageUsers = this.allUsers.filter((item) => {
-      //     return item.id < count;
-      //   });
-      // },
+    computed: {
+      rowsQuantity() {
+        return this.allUsers.slice((this.currentPage - 1) * this.tableRows, this.currentPage * this.tableRows)
+      }
     },
 
     mounted() {

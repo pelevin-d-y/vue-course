@@ -28,12 +28,6 @@
         this.$emit('input', event.target.value);
       }
     },
-
-    // watch: {
-    //   currentCount: function(count) {
-    //     this.$emit('changeSelect', count)
-    //   }
-    // }
   }
 </script>
 
