@@ -13,7 +13,7 @@
         <th>Телефон</th>
         <th>Зарегистрирован</th>
       </tr>
-      <tr v-for="user in getPageUsers" :key="user.id">
+      <tr v-for="user in rowsQuantity" :key="user.id">
         <td>
           <router-link :to="`/user/${user.id}`"># {{ user.id }}</router-link>
         </td>
@@ -26,7 +26,7 @@
         <td>{{ user.registered }}</td>
       </tr>
     </table>
-    <table-pagination :tableRows="tableRows" :allRows="allUsers.length" v-model.number="currentPage" ></table-pagination>
+    <table-pagination :tableRows="tableRows" :allRows="allUsers.length" v-model.number="currentPage"></table-pagination>
   </div>
 </template>
 
@@ -44,22 +44,23 @@ import axios from 'axios'
           url: 'http://localhost:3000/users/',
           tableRows: 5,
           allUsers: [],
+          currentUsers: [],
           currentPage: 1,
-          pageTitle: 'Table'
+          pageTitle: 'Таблица'
       }),
 
-    computed: {
-      getPageUsers() {
-        return this.allUsers.slice((this.currentPage - 1) * this.tableRows, this.currentPage * this.tableRows)
-      }
-    },
-
-    methods: {
+     methods: {
       loadData() {
         axios.get(this.url)
           .then(response => {
             this.allUsers = response.data
           })
+      },
+    },
+
+    computed: {
+      rowsQuantity() {
+        return this.allUsers.slice((this.currentPage - 1) * this.tableRows, this.currentPage * this.tableRows)
       }
     },
 

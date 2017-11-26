@@ -26,6 +26,11 @@ export default new Router({
       name: 'userEdit',
       component: () => import('@/components/UserEdit'),
       props: true
+    },
+    {
+      path: '/graph',
+      name: 'graph',
+      component: () => import('@/components/graph')
     }
   ]
 })

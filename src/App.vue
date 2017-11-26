@@ -24,4 +24,12 @@ h1 {
 .btn {
   width: 100%;
 }
+
+ .svg-icon {
+   width: 100px;
+   height: 100px;
+   background: url('assets/logo.png') no-repeat center;
+   background-size: contain;
+   border: 2px solid black;
+  }
 </style>

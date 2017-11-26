@@ -1,13 +1,18 @@
 <template>
-  <navigation :pageTitle="pageTitle"></navigation>
+  <div>
+    <div></div><navigation :pageTitle="pageTitle"></navigation>
+    <carousel-one></carousel-one>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
+  import CommitChart from '@/components/graph'
 
+export default {
   components: {
-    navigation: () => import('@/components/navigation/navigation')
+    navigation: () => import('@/components/navigation/navigation'),
+    carouselOne: () => import('@/components/items-components/carousel-3d'),
+    CommitChart
   },
 
   data: () => ({

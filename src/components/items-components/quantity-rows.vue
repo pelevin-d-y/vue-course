@@ -28,7 +28,7 @@
       currentCount() {
         this.$emit('input', event.target.value);
       }
-    }
+    },
   }
 </script>
 
