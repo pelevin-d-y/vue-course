@@ -1,34 +1,65 @@
 <template>
-  <div class="hello container">
-    <h1>User add</h1>
-    <div class="row">
-      <div class="col-lg-4">
-        <router-link to="/" class="vuesj-course btn btn-primary">
-          vue-js-cours
-        </router-link>
-      </div>
-      <div class="col-lg-4">
-        <router-link to="/list" class="vuesj-course btn btn-primary">
-          Список пользователей
-        </router-link>
-      </div>
-      <div class="col-lg-4">
-        <router-link to="/user/add" class="vuesj-course btn btn-primary" active-class="active">
-          Добавить пользователя
-        </router-link>
-      </div>
-    </div>
+  <div>
+    <navigation :pageTitle="pageTitle"></navigation>
+    <user-form v-model="user">
+      <button class="btn btn-danger" @click="add"> добавить пользователя </button>
+    </user-form>
   </div>
 </template>
 
 <script>
+import datepicker from '@/components/plagins/datepicker'
+import axios from 'axios'
+
+// Модель для пустого пользователя
+const defaultUser = {
+  id: null,
+  guid: '',
+  isActive: false,
+  balance: '',
+  picture: 'http://placehold.it/128x128',
+  age: 0,
+  eyeColor: '',
+  firstName: '',
+  lastName: '',
+  company: '',
+  email: '',
+  phone: '',
+  address: '',
+  about: '',
+  registered: ''
+};
+
 export default {
-  name: 'HelloWorld',
+  name: 'user',
+
+  components: {
+    navigation: () => import('@/components/navigation/navigation'),
+    UserForm: () => import('@/components/items-components/UserForm.vue')
+  },
+
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      url: 'http://localhost:3000/users/',
+      msg: 'Welcome to Your Vue.js App',
+      pageTitle: 'User',
+      user: defaultUser
+    }
+  },
+
+  methods: {
+    add() {
+      axios.post(this.url, this.user)
+        .then(() => {
+          // После успешного создания пользователя
+          // переходим на страницу с таблицей
+          // или можно перейти на страницу редактирования
+          // так как в ответе приходит тот же объект, но с ID
+          this.$router.push({ path: '/list' });
+        });
     }
   }
+
 }
 </script>
 

@@ -23,11 +23,12 @@
         countArray: [5, 7, 10, 15, 30]
       }
     },
+
     methods: {
       currentCount() {
         this.$emit('input', event.target.value);
       }
-    },
+    }
   }
 </script>
 

@@ -1,48 +1,35 @@
 <template>
-  <div class="hello container">
-    <h1>UserEdit</h1>
-    <div class="row">
-      <div class="col-lg-4">
-        <router-link to="/" class="vuesj-course btn btn-primary">
-          vue-js-cours
-        </router-link>
-      </div>
-      <div class="col-lg-4">
-        <router-link to="/list" class="vuesj-course btn btn-primary">
-          Список пользователей
-        </router-link>
-      </div>
-      <div class="col-lg-4">
-        <router-link to="/user/add" class="vuesj-course btn btn-primary" active-class="active" exact>
-          Добавить пользователя
-        </router-link>
-      </div>
+  <div>
+    <navigation :pageTitle="pageTitle"></navigation>
+    <div class="container">
+      <router-link :to="'' + (parseInt(id, 10) + 1)" class="btn btn-primary"> Следующий пользователь </router-link>
+      <div class="id">{{id}}</div>
     </div>
-    <div>{{id}}</div>
-    <user-form v-if="user" v-model="user">
-      {{ user }}
-    </user-form>
+    <user-form v-if="user" v-model="user"></user-form>
+    <button class="btn btn-danger" @click="remove"> Удалить пользователя </button>
+    <button class="btn btn-success"  @click="save"> Сохранить данные </button>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 
   export default {
     name: 'UserEdit',
-    props: {
-      id: String
-    },
 
     components: {
-      UserForm: () => import('@/components/items-components/UserForm')
+      UserForm: () => import('@/components/items-components/UserForm'),
+      navigation: () => import('@/components/navigation/navigation'),
+    },
+
+    props: {
+      id: String
     },
 
     data() {
       return {
         url: 'http://localhost:3000/users/',
-
-        user: null
+        user: null,
+        pageTitle: 'User edit'
       }
     },
 
@@ -58,14 +45,49 @@ import axios from 'axios'
           .then(response => {
             this.user = response.data
           })
+          .catch(e => {
+            alert('такого пользователя не существует');
+            document.body.remove();
+          })
+      },
+
+      save() {
+        axios.patch(this.userUrl, this.user)
+        .then(() => {
+          this.$router.push({path: '/list'})
+        })
+      },
+
+      remove() {
+        const confirmed = confirm('удалить пользователя?')
+        if (!confirmed) {
+          return
+        }
+
+        axios.delete(this.userUrl)
+          .then(() => {
+            this.$router.push({path: '/list'})
+          })
       }
     },
+    beforeRouteUpdate (to, from, next) {
+        this.loadData();
+        next()
+    },
+
     mounted() {
       this.loadData();
-    }
+    },
   }
 </script>
 
 <style scoped>
+  .id {
+    font-size: 50px;
+    text-align: center;
+  }
 
+  .btn-danger {
+    margin-bottom: 20px;
+  }
 </style>
